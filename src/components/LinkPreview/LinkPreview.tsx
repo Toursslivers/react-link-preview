@@ -22,6 +22,7 @@ export interface LinkPreviewProps {
   borderColor?: string;
   showLoader?: boolean;
   customLoader?: JSX.Element[] | JSX.Element | null;
+  renderComponents?: JSX.Element[]| JSX.Element | null;
 }
 
 export interface APIResponse {
@@ -49,6 +50,7 @@ export const LinkPreview: React.FC<LinkPreviewProps> = ({
   borderColor = '#ccc',
   showLoader = true,
   customLoader = null,
+  renderComponents = null,
 }) => {
   const _isMounted = useRef(true);
   const [metadata, setMetadata] = useState<APIResponse | null>();
@@ -96,6 +98,10 @@ export const LinkPreview: React.FC<LinkPreviewProps> = ({
   const onClick = () => {
     window.open(url, '_blank');
   };
+
+  if(renderComponents){
+      return <>{renderComponents(metadata)}</>
+  }
 
   return (
     <div
